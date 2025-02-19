@@ -1,160 +1,421 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Scattered Forest Search: Smarter Code Space Exploration</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Scattered Forest Search -- smarter code space exploration with scaling LLM inference.">
+  <meta name="keywords" content="Code Generation, LLM Inference, Optimization, Scattered Forest Search">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scattered Forest Search: Smarter Code Space Exploration with LLM Inference</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/explorer-index.js"></script>
 </head>
 <body>
 
-  <!-- HEADER / TITLE SECTION -->
-  <header>
-    <h1>Scattered Forest Search</h1>
-    <h2>Smarter Code Space Exploration with Scaling LLM Inference</h2>
-    <p><strong>Authors:</strong> Jonathan Light, Yue Wu, Yiyou Sun, Wenchao Yu, Yanchi Liu, 
-       Xujiang Zhao, Ziniu Hu, Haifeng Chen, Wei Cheng</p>
-    <p><em>ICML 2025 (Forthcoming)</em></p>
-  </header>
+<!-- NAVIGATION BAR -->
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">More Research</a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://avalonbench.github.io">
+            <span class="small-caps">AvalonBench</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
 
-  <!-- LINKS TO PDF, ARXIV, CODE, VIDEO -->
-  <section id="links">
-    <h3>Links</h3>
-    <ul>
-      <li><a href="https://arxiv.org/pdf/2411.05010" target="_blank">PDF</a></li>
-      <li><a href="https://arxiv.org/abs/2411.05010" target="_blank">Arxiv</a></li>
-      <li><a href="https://github.com/codespace-optimization/sfs" target="_blank">Code</a></li>
-      <li><a href="https://www.youtube.com/watch?v=Qz6NFMv3ug0" target="_blank">Video</a></li>
-    </ul>
-  </section>
+<!-- HERO HEADER -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
 
-  <!-- ABSTRACT -->
-  <section id="abstract">
-    <h3>Abstract</h3>
-    <p>
-      We propose a novel approach to scaling LLM inference for code generation by
-      framing the task as a black-box optimization problem within the code space. Drawing
-      on optimization theory, we introduce <strong>Scattered Forest Search (SFS)</strong> to encourage
-      both broad exploration of diverse solutions and efficient exploitation of feedback.
-      Our method consists of three main components: <em>Scattering</em>, which promotes
-      diversity through textual "improvement directions"; <em>Foresting</em>, which extends
-      tree search from multiple “seed” solutions; and <em>Scouting</em>, which shares successful
-      directions across branches. Empirically, SFS significantly outperforms best-of-N sampling,
-      line search, and tree search on standard code-generation benchmarks, achieving higher
-      pass rates with fewer LLM calls.
-    </p>
-  </section>
+          <!-- PAPER TITLE -->
+          <h1 class="title is-1 publication-title">
+            <span class="textsc">Scattered Forest Search</span>: Smarter Code Space Exploration with LLM Inference
+          </h1>
 
-  <!-- FIGURES / IMAGES -->
-  <section id="figures">
-    <h3>Figures & Diagrams</h3>
+          <!-- AUTHORS -->
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Jonathan Light<sup>1</sup>,</span>
+            <span class="author-block">Yue Wu<sup>2</sup>,</span>
+            <span class="author-block">Yiyou Sun<sup>3</sup>,</span>
+            <span class="author-block">Wenchao Yu<sup>3</sup>,</span>
+            <span class="author-block">Yanchi liu<sup>3</sup>,</span>
+            <span class="author-block">Xujiang Zhao<sup>3</sup>,</span>
+            <span class="author-block">Ziniu Hu<sup>4</sup>,</span>
+            <span class="author-block">Haifeng Chen<sup>3</sup>,</span>
+            <span class="author-block">Wei Cheng<sup>3</sup></span>
+          </div>
 
-    <!-- Example figure showing confusion matrix -->
-    <figure>
-      <img src="static/images/confusion.png" alt="Confusion Matrix" style="max-width:400px;">
-      <figcaption>Confusion matrix for self-generated validation tests used within SFS.</figcaption>
-    </figure>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Rensselaer Polytechnic Institute,</span>
+            <span class="author-block"><sup>2</sup>Princeton University,</span>
+            <span class="author-block"><sup>3</sup>NEC Laboratories America,</span>
+            <span class="author-block"><sup>4</sup>XAi</span>
+          </div>
 
-    <!-- Example figure showing scaling ground truth data -->
-    <figure>
-      <img src="static/images/scaling_groundtruth.pdf" alt="Scaling Ground Truth" style="max-width:400px;">
-      <figcaption>Illustration of how correct solutions scale with repeated generation under SFS.</figcaption>
-    </figure>
+          <!-- LINKS -->
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2411.05010"
+                   class="external-link button is-normal is-rounded is-dark" target="_blank">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>PDF</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2411.05010"
+                   class="external-link button is-normal is-rounded is-dark" target="_blank">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>Arxiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/codespace-optimization/sfs"
+                   class="external-link button is-normal is-rounded is-dark" target="_blank">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=Qz6NFMv3ug0"
+                   class="external-link button is-normal is-rounded is-dark" target="_blank">
+                  <span class="icon"><i class="fab fa-youtube"></i></span>
+                  <span>Video</span>
+                </a>
+              </span>
+            </div>
+          </div>
 
-    <!-- Additional images from your list -->
-    <figure>
-      <img src="static/images/scaling_high.pdf" alt="High-Level Scaling Overview" style="max-width:400px;">
-      <figcaption>A broader look at how SFS consistently outperforms baseline methods as the number of solutions increases.</figcaption>
-    </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <figure>
-      <img src="static/images/scaling_model.pdf" alt="Scaling with Different LLMs" style="max-width:400px;">
-      <figcaption>Performance trends showing how SFS benefits small vs. large language models.</figcaption>
-    </figure>
+<!-- VIDEO DEMO HERO -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <!-- Example SFS Demo (replace with correct video if needed) -->
+        <source src="./static/videos/sfs_app_demo.mov" type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        <span class="textsc">SFS</span> (Scattered Forest Search) Demo for Code Generation
+      </h2>
+    </div>
+  </div>
+</section>
 
-    <figure>
-      <img src="static/images/theme_passk.pdf" alt="Theme-based Prompts" style="max-width:400px;">
-      <figcaption>Experiment on diversity: different "themes" in prompts yield improved exploration.</figcaption>
-    </figure>
+<!-- ABSTRACT SECTION -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            We propose a novel approach to scaling LLM inference for code generation by viewing the task
+            as a black-box optimization problem over the code space. Drawing inspiration from traditional
+            optimization, we introduce <strong>Scattered Forest Search (SFS)</strong> to encourage solution
+            diversity while leveraging feedback from code execution tests. Our method features three key
+            components: <em>Scattering</em>, which prompts the LLM to produce a diverse set of improvement
+            directions; <em>Foresting</em>, which expands tree search from multiple random seed solutions;
+            and <em>Scouting</em>, which shares successful or unsuccessful improvement “directions” across
+            search branches. Experiments on standard code generation tasks—HumanEval, MBPP, APPS,
+            CodeContests, and Leetcode—demonstrate significant improvements in pass rates compared to
+            repeated sampling, line search, and naive tree search, while also finding correct solutions
+            faster and with fewer model calls. Our framework highlights the importance of systematic
+            exploration and exploitation strategies when scaling LLM inference for program synthesis.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <figure>
-      <img src="static/images/token_scaling.pdf" alt="Token-based Scaling" style="max-width:400px;">
-      <figcaption>Comparison of solution discovery vs. tokens consumed for multiple methods.</figcaption>
-    </figure>
-  </section>
+<!-- METHOD SECTION -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Method</h2>
 
-  <!-- VIDEO DEMO -->
-  <section id="video-demo">
-    <h3>Video Demo</h3>
-    <video width="640" height="360" controls>
-      <source src="static/videos/sfs_app_demo.mov" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-    <p>
-      Or watch on YouTube: 
-      <a href="https://www.youtube.com/watch?v=Qz6NFMv3ug0" target="_blank">SFS Demo</a>
-    </p>
-  </section>
+        <!-- codespace_viz figure -->
+        <figure class="wrap-around-figure">
+          <img src="./static/images/codespace_viz.png"
+               alt="Visual depiction of the code space" style="max-width: 100%;">
+          <figcaption>
+            A conceptual 2D illustration of code space. Each point corresponds to a potential code solution.
+          </figcaption>
+        </figure>
 
-  <!-- TECHNICAL OVERVIEW -->
-  <section id="technical-overview">
-    <h3>Technical Overview</h3>
-    <p>
-      <strong>Scattering:</strong> The paper introduces a mechanism to prompt the model for 
-      “improvement directions” before generating child solutions. Each child solution 
-      implements a different textual direction, ensuring greater coverage of code space.
-    </p>
-    <p>
-      <strong>Foresting:</strong> Instead of refining a single seed, the search maintains 
-      multiple seed solutions, dynamically deciding which one to improve (via MCTS) and 
-      avoiding overcommitment to potentially flawed initial code.
-    </p>
-    <p>
-      <strong>Scouting:</strong> Insights—such as successful or unsuccessful “directions”—are 
-      shared across different branches so that good ideas can be reused, improving 
-      exploitation of promising search regions.
-    </p>
-    <p>
-      Empirically, SFS enhances both <em>exploration</em> (diverse solutions) and 
-      <em>exploitation</em> (iterative refinement), resulting in higher pass@k rates on 
-      HumanEval, MBPP, APPS, CodeContests, and Leetcode.
-    </p>
-  </section>
+        <div class="content has-text-justified">
+          <p>
+            Our approach treats code generation as a black-box optimization problem in which
+            each generated function or program is an element in the code space. The objective
+            is to find a solution passing all hidden tests. We enhance tree search to balance
+            exploration (<em>Scattering</em>) and exploitation (leveraging partial successes).
+            Specifically:
+          </p>
+          <ul>
+            <li><strong>Scattering:</strong> Before branching from a parent solution, the LLM proposes
+              multiple textual “directions” for improvement, ensuring children solutions differ
+              significantly and helping to escape local optima.</li>
+            <li><strong>Foresting:</strong> We use multiple “seed” solutions and dynamically choose
+              which seeds to expand next. Each seed has its own search tree, reducing the risk
+              of refining a single flawed seed.</li>
+            <li><strong>Scouting:</strong> Global insights about promising or unpromising directions
+              are shared across branches so that good directions get reinforced and unproductive
+              directions are minimized.</li>
+          </ul>
+          <p>
+            Altogether, SFS finds correct solutions faster and exploits verification signals
+            (like partial test passes) more effectively than simpler inference approaches.
+          </p>
+        </div>
 
-  <!-- RESULTS SECTION -->
-  <section id="results">
-    <h3>Key Results</h3>
-    <ul>
-      <li><strong>Higher pass@k:</strong> SFS outperforms repeated sampling, line search, 
-          and naive tree search across code benchmarks.</li>
-      <li><strong>Faster discovery:</strong> It finds correct solutions in fewer solution 
-          attempts, reducing total LLM calls.</li>
-      <li><strong>Better scaling:</strong> SFS continues to improve performance beyond 
-          typical plateaus observed in baseline methods, highlighting the role of 
-          better exploration.</li>
-      <li><strong>Theoretical basis:</strong> The paper offers a Markov chain argument, 
-          noting that SCATTERING improves conductance and mixing, helping to escape 
-          local maxima in code space.</li>
-    </ul>
-  </section>
+        <!-- prior_methods.png (large, full width, after main method text) -->
+        <figure style="margin: 2rem 0;">
+          <img src="./static/images/prior_methods.png"
+               alt="Prior Methods Visualization" style="max-width:100%;">
+          <figcaption>
+            Visualization of prior inference-time methods (repeated sampling, line search, tree search).
+          </figcaption>
+        </figure>
 
-  <!-- CONCLUSION OR NEXT STEPS -->
-  <section id="conclusion">
-    <h3>Conclusion</h3>
-    <p>
-      By reframing code generation as a black-box optimization problem, 
-      <strong>Scattered Forest Search</strong> systematically exploits iterative feedback 
-      while diversifying candidate solutions. The authors demonstrate significant gains 
-      in correctness and efficiency on standard code-generation tasks, hinting that 
-      such optimization-informed strategies could be broadly useful wherever 
-      multiple calls to an LLM are feasible. 
-    </p>
-  </section>
+        <!-- optimization_techniques.png (large, full width, after main method text) -->
+        <figure style="margin: 2rem 0;">
+          <img src="./static/images/optimization_techniques.png"
+               alt="Optimization Techniques in Code Space" style="max-width:100%;">
+          <figcaption>
+            A high-level illustration of the optimization-inspired approaches (Scattering, Foresting, Scouting) used in SFS.
+          </figcaption>
+        </figure>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2025 SFS Authors – For inquiries, please contact the corresponding author 
-       <em>Wei Cheng</em> at NEC Laboratories America.</p>
-  </footer>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS SECTION -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Key Results</h2>
+        <div class="content has-text-justified">
+
+          <!-- Single PNG-based results carousel -->
+          <div class="carousel results-carousel">
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <figure>
+                  <img src="static/images/scaling_method.png" alt="Scaling with different methods" style="max-width:80%;">
+                  <figcaption>Scaling performance across different search methods.</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <figure>
+                  <img src="static/images/token_scaling.png" alt="Token Scaling" style="max-width:80%;">
+                  <figcaption>Analysis of solution discovery vs. tokens consumed.</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <figure>
+                  <img src="static/images/high_budget_scaling.png" alt="High Budget Scaling" style="max-width:80%;">
+                  <figcaption>Continuing improvements at higher generation budgets.</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <figure>
+                  <img src="static/images/scaling_apps.png" alt="Scaling on APPS dataset" style="max-width:80%;">
+                  <figcaption>Scaling results on the APPS benchmark.</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <figure>
+                  <img src="static/images/scaling_codecontests.png" alt="Scaling on CodeContests" style="max-width:80%;">
+                  <figcaption>Scaling results on the CodeContests benchmark.</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <figure>
+                  <img src="static/images/scaling_model.png" alt="Scaling across different LLMs" style="max-width:80%;">
+                  <figcaption>Performance across multiple LLM models.</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <figure>
+                  <img src="static/images/confusion.png" alt="Confusion Matrix" style="max-width:80%;">
+                  <figcaption>Confusion matrix of self-generated validation tests used by SFS.</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <figure>
+                  <img src="static/images/scaling_groundtruth.png" alt="Scaling with groundtruth tests" style="max-width:80%;">
+                  <figcaption>Scaling performance when partial ground truth tests are available.</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <figure>
+                  <img src="static/images/scaling_humaneval.png" alt="Scaling on HumanEval" style="max-width:80%;">
+                  <figcaption>Scaling results on the HumanEval benchmark.</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <figure>
+                  <img src="static/images/scaling_leetcode.png" alt="Scaling on Leetcode" style="max-width:80%;">
+                  <figcaption>Scaling results on Leetcode tasks.</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <figure>
+                  <img src="static/images/scaling_mbpp.png" alt="Scaling on MBPP" style="max-width:80%;">
+                  <figcaption>Scaling results on the MBPP benchmark.</figcaption>
+                </figure>
+              </div>
+            </div>
+          </div> <!-- end carousel -->
+
+          <p>
+            <strong>Higher accuracy and faster discovery.</strong> On code benchmarks like HumanEval,
+            MBPP, APPS, CodeContests, and Leetcode, SFS surpasses repeated sampling (BoN), line
+            search, and naive tree search. It also scales better with each additional solution attempt,
+            giving a higher probability of finding the correct solution in fewer total LLM calls.
+          </p>
+          <p>
+            <strong>Diverse solutions.</strong> By prompting for multiple directions and seeds, SFS
+            avoids generating near-duplicate outputs. The search explores more of the code space, yet
+            still exploits valuable partial feedback about correctness.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCLUSION SECTION -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Conclusion</h2>
+        <div class="content has-text-justified">
+          <p>
+            In conclusion, <strong>Scattered Forest Search (SFS)</strong> reframes code generation as
+            a black-box optimization problem over the code space, systematically balancing exploration
+            of new code solutions with exploitation of partial successes. By leveraging simple but
+            powerful techniques—Scattering, Foresting, and Scouting—SFS substantially reduces the
+            number of calls required to find a correct solution and achieves higher success rates
+            across diverse benchmarks.
+          </p>
+          <p>
+            Our results emphasize that code generation with LLMs benefits greatly from improved
+            inference-time algorithms. By systematically guiding sampling through textual “directions,”
+            ensuring multiple diverse initial seeds, and sharing successful strategies across branches,
+            we show that SFS elevates the performance and versatility of LLMs in program synthesis
+            tasks.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="https://arxiv.org/pdf/2411.05010" target="_blank">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/codespace-optimization/sfs" class="external-link" target="_blank">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is adapted from previous bulma-based templates, licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+              Creative Commons Attribution-ShareAlike 4.0 International License
+            </a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>
